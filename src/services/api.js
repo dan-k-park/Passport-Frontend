@@ -15,3 +15,8 @@ const login = data => {
   }).then(res => res.json());
 }
 
+export const api = {
+  auth: {
+    login
+  }
+}

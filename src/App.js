@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import Login from './components/Login'
 
 
 import './App.css';
+import { api } from './services/api';
 
 class App extends Component {
   constructor() {
@@ -19,13 +21,36 @@ class App extends Component {
   componentDidMount() {
     const token = localStorage.getItem('token')
     if (token) {
-      
+      api.auth.getCurrentUser().then(user => {
+        if (!user.error && !user.message) {
+          this.setState({
+            currentUser: user
+          })
+        }
+      })
     }
+  }
+
+  login = user => {
+    localStorage.setItem('token', user.jwt);
+    api.auth.getCurrentUser().then(user => {
+      if (!user.error && !user.message) {
+        this.setState({
+          currentUser: user
+        })
+      }
+    })
   }
 
   render() {
     return (
-      <h1>Hi</h1>
+      <Router>
+        <Route
+          path='/login'
+          exact
+          render = {props => <Login {...props} handleLogin={this.login} />}
+        />
+      </Router>
     )
   }
 }

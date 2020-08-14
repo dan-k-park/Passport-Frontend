@@ -55,7 +55,7 @@ class App extends Component {
         <Route 
           path='/'
           exact
-          render = {props => <Map {...props} />}
+          render = {props => <Map {...props} currentUser={this.state.currentUser} />}
         />
       </Router>
     )

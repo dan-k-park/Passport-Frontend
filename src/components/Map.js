@@ -56,6 +56,7 @@ class Map extends Component {
   render() {
     return (
       <div>
+        <h1>Welcome {this.props.currentUser.name}</h1>
        <VectorMap
         map={"world_mill"}
         backgroundColor={"transparent"}//change it to ocean blue: #0077be

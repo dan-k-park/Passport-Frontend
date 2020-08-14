@@ -1,4 +1,4 @@
-const API_ROOT = 'localhos'const API_ROOT = 'http://localhost:3001'
+const API_ROOT = 'http://localhost:3001'
 const token = () => localStorage.getItem('token');
 
 const headers = {
@@ -10,14 +10,14 @@ const headers = {
 const login = data => {
   return fetch(`${API_ROOT}/login`, {
     method: 'POST',
-    headers: headers(),
+    headers: headers,
     body: JSON.stringify({user: data})
   }).then(res => res.json());
 }
 
 const getCurrentUser = () => {
   return fetch(`${API_ROOT}/current_user`, {
-    headers: headers()
+    headers: headers
   }).then(res => res.json());
 };
 

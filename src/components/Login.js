@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { api } from '../services/api'
+import { api } from '../services/api';
+import Form from 'react-bootstrap/Form'
 
 class Login extends Component {
   constructor() {
@@ -36,7 +37,20 @@ class Login extends Component {
 
   render() {
     return (
-      <h1>placeholder</h1>
+      <Form>
+        <Form.Group controlId="formBasicUsername">
+          <Form.Label>Username</Form.Label>
+          <Form.Control type="username" />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
     )
   }
 }

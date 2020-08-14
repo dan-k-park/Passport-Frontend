@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Login from './components/Login'
+import Login from './components/Login';
+import Map from './components/Map';
 
 
 import './App.css';
@@ -49,6 +50,12 @@ class App extends Component {
           path='/login'
           exact
           render = {props => <Login {...props} handleLogin={this.login} />}
+        />
+
+        <Route 
+          path='/'
+          exact
+          render = {props => <Map {...props} />}
         />
       </Router>
     )

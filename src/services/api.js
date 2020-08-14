@@ -15,8 +15,15 @@ const login = data => {
   }).then(res => res.json());
 }
 
+const getCurrentUser = () => {
+  return fetch(`${API_ROOT}/current_user`, {
+    headers: headers()
+  }).then(res => res.json());
+};
+
 export const api = {
   auth: {
-    login
+    login,
+    getCurrentUser
   }
 }

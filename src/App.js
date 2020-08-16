@@ -20,16 +20,24 @@ class App extends Component {
   }
   
   componentDidMount() {
-    const token = localStorage.getItem('token')
-    if (token) {
-      api.auth.getCurrentUser().then(user => {
-        if (!user.error && !user.message) {
-          this.setState({
-            currentUser: user
-          })
-        }
-      })
-    }
+    // const token = localStorage.getItem('token')
+    // if (token) {
+    //   api.auth.getCurrentUser().then(user => {
+    //     if (!user.error && !user.message) {
+    //       this.setState({
+    //         currentUser: user
+    //       })
+    //     }
+    //   })
+    // }
+    this.setState({
+      currentUser: {
+        id: 1,
+        username: 'user',
+        password: 'pass',
+        name: 'Joey'
+      }
+    })
   }
 
   login = user => {

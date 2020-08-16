@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { VectorMap } from "react-jvectormap"
+import { Grid, Segment } from 'semantic-ui-react'
 
 const { getName } = require('country-list');
 
@@ -55,12 +56,19 @@ class Map extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Welcome {this.props.currentUser.name}</h1>
-       <VectorMap
+      <Grid columns={3} divided>
+        <Grid.Row stretched>
+          <Grid.Column>
+            <Segment>My Trips</Segment>
+            <Segment>Top Trips</Segment>
+          </Grid.Column>
+          <Grid.Column>
+            <Segment>
+            <VectorMap
         map={"world_mill"}
         backgroundColor={"transparent"}//change it to ocean blue: #0077be
-        zoomOnScroll={false}
+        zoomOnScroll={true}
+        panOnDrag={true}
         containerStyle={{
           width: "100%",
           height: "520px"
@@ -95,7 +103,10 @@ class Map extends Component {
           ]
         }}
       />
-    </div>
+            </Segment>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     )
   }
 }

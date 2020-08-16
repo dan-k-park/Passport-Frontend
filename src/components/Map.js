@@ -2,56 +2,36 @@ import React, { Component } from 'react';
 import { VectorMap } from "react-jvectormap"
 import { Search } from 'semantic-ui-react'
 
-const { getName } = require('country-list');
+const { getNames } = require('country-list');
 
 class Map extends Component {
   constructor() {
     super()
     this.state = {
-      countryCodes: [],
-      countryNames: [],
+      names: [],
       searchValue: '',
       color: '#48aeef'
     }
   }
 
   componentDidMount() {
-    if (!localStorage.getItem('token')) {
-      this.props.history.push('/login')
-    }
-  }
-
-  handleClick = (e, code) => {
-    const codes = this.state.countryCodes
-    if (!codes.includes(code)) {
-      this.setState(
-        {
-          countryCodes: [...codes, code]
-        },
-        () => this.getCountriesNamesList()
-      )
-    }
+    this.setState({
+      names: getNames()
+    })
   }
 
   handleSearchChange = e => {
     this.setState()
   }
 
-  getCountriesNamesList = () => {
-    const codes = this.state.countryCodes
-    const list = codes.map(code => getName(code));
-    this.setState(
-      {
-        countryNames: list
-      },
-    )
-  }
-
 
   render() {
     return (
       <div>
-        <Search />
+        <Search 
+          onSearchChange={this.handleSearchChange}
+          
+        />
         <VectorMap
           map={"world_mill"}
           backgroundColor={"transparent"}//change it to ocean blue: #0077be

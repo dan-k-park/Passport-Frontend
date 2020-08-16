@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Map from './Map.js'
-
+import { Link } from 'react-router-dom';
 import { Grid, Segment } from 'semantic-ui-react'
 
 
@@ -14,7 +14,7 @@ class Home extends Component {
 
   render() {
     return (
-      <Grid stackable divided columns={2} padded={true}>
+      <Grid stackable columns={2} padded={true}>
         <Grid.Row stretched>
         <Grid.Column width={11}>
             <Segment>
@@ -22,8 +22,10 @@ class Home extends Component {
             </Segment>
           </Grid.Column>
         <Grid.Column width={5}>
-          <Segment>My Trips</Segment>
-          <Segment>Top Trips</Segment>
+          <Segment>
+            My Passport
+            <Link to={'/new'}>New Trip</Link>
+          </Segment>
         </Grid.Column>
         </Grid.Row>
       </Grid>

@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from './components/Login';
-import Map from './components/Map';
+import Home from './components/Home';
+import NewTrip from './components/NewTrip';
 
 
 import './App.css';
 import { api } from './services/api';
+
+const { getNames } = require('country-list');
+
 
 class App extends Component {
   constructor() {
@@ -36,7 +40,8 @@ class App extends Component {
         username: 'user',
         password: 'pass',
         name: 'Joey'
-      }
+      },
+      countries: getNames()
     })
   }
 
@@ -63,7 +68,13 @@ class App extends Component {
         <Route 
           path='/'
           exact
-          render = {props => <Map {...props} currentUser={this.state.currentUser} />}
+          render = {props => <Home {...props} currentUser={this.state.currentUser} />}
+        />
+
+        <Route
+          path='/new'
+          exact
+          render = {props => <NewTrip {...props} /> }
         />
       </Router>
     )

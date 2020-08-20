@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash'
 import { VectorMap } from "react-jvectormap"
 import { Search } from 'semantic-ui-react'
 
@@ -9,28 +10,54 @@ class Map extends Component {
     super()
     this.state = {
       names: [],
-      searchValue: '',
+      value: '',
+      loading: false,
       color: '#48aeef'
     }
   }
 
   componentDidMount() {
+    const names = getNames();
+    let namesInObj = []
+    for (let i = 0; i < names.length; i++) {
+      namesInObj.push({'name': names[i]})
+    }
     this.setState({
-      names: getNames()
+      names: namesInObj
     })
   }
 
-  handleSearchChange = e => {
-    this.setState()
+  handleResultSelect = (e, { result }) => this.setState({ value: result.name })
+
+  handleSearchChange = (e, { value }) => {
+    this.setState({ loading: true, value })
+
+    setTimeout(() => {
+      if (this.state.value.length < 1) return this.setState({ loading: false, names: [], value: ''})
+
+      const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
+      const isMatch = (result) => re.test(result.name)
+
+      this.setState({
+        loading: false,
+        names: _.filter(this.state.names, isMatch),
+      })
+    }, 300)
   }
 
-
   render() {
+    const { loading, value, names } = this.state
     return (
       <div>
-        <Search 
-          onSearchChange={this.handleSearchChange}
-          
+        <Search
+            input={{ icon: 'search', iconPosition: 'left' }}
+            loading={loading}
+            onResultSelect={this.handleResultSelect}
+            onSearchChange={_.debounce(this.handleSearchChange, 500, {
+              leading: true,
+            })}
+            results={names}
+            value={value}
         />
         <VectorMap
           map={"world_mill"}

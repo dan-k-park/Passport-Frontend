@@ -5,58 +5,54 @@ import { Search } from 'semantic-ui-react'
 
 const { getNames } = require('country-list');
 
+const namesArr = getNames();
+
+const source = []
+namesArr.forEach(name => {
+  source.push({'name': name})
+})
+
 class Map extends Component {
   constructor() {
     super()
     this.state = {
-      names: [],
+      results: [],
       value: '',
-      loading: false,
+      isisLoading: false,
       color: '#48aeef'
     }
-  }
-
-  componentDidMount() {
-    const names = getNames();
-    let namesInObj = []
-    for (let i = 0; i < names.length; i++) {
-      namesInObj.push({'name': names[i]})
-    }
-    this.setState({
-      names: namesInObj
-    })
   }
 
   handleResultSelect = (e, { result }) => this.setState({ value: result.name })
 
   handleSearchChange = (e, { value }) => {
-    this.setState({ loading: true, value })
+    this.setState({ isLoading: true, value })
 
     setTimeout(() => {
-      if (this.state.value.length < 1) return this.setState({ loading: false, names: [], value: ''})
+      if (this.state.value.length < 1) return this.setState({ isLoading: false, results: [], value: ''})
 
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
       const isMatch = (result) => re.test(result.name)
 
       this.setState({
-        loading: false,
-        names: _.filter(this.state.names, isMatch),
+        isLoading: false,
+        results: _.filter(source, isMatch),
       })
     }, 300)
   }
 
   render() {
-    const { loading, value, names } = this.state
+    const { isLoading, value, results } = this.state
     return (
       <div>
         <Search
             input={{ icon: 'search', iconPosition: 'left' }}
-            loading={loading}
+            loading={isLoading}
             onResultSelect={this.handleResultSelect}
             onSearchChange={_.debounce(this.handleSearchChange, 500, {
               leading: true,
             })}
-            results={names}
+            results={results}
             value={value}
         />
         <VectorMap

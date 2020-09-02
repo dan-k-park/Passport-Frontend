@@ -12,15 +12,16 @@ namesArr.forEach(name => {
   source.push({'name': name})
 })
 
+const initialState = { isLoading: false, results: [], value: '' }
+
 class Map extends Component {
   constructor() {
     super()
-    this.state = {
-      results: [],
-      value: '',
-      isisLoading: false,
-      color: '#48aeef'
-    }
+    this.state = initialState
+  }
+
+  componentDidMount() {
+    console.log(source)
   }
 
   handleResultSelect = (e, { result }) => this.setState({ value: result.name })
@@ -29,7 +30,7 @@ class Map extends Component {
     this.setState({ isLoading: true, value })
 
     setTimeout(() => {
-      if (this.state.value.length < 1) return this.setState({ isLoading: false, results: [], value: ''})
+      if (this.state.value.length < 1) return this.setState(initialState)
 
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
       const isMatch = (result) => re.test(result.name)
@@ -39,6 +40,7 @@ class Map extends Component {
         results: _.filter(source, isMatch),
       })
     }, 300)
+    console.log(this.state.results)
   }
 
   render() {

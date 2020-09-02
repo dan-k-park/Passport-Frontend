@@ -1,2 +1,2 @@
 # Passport-Frontend
-A travel log app.
+A travel log app. Frontend.
